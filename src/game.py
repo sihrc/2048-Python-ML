@@ -15,15 +15,12 @@ if __name__ == "__main__":
     view = View(model)
     controller = Controller(model)
 
-    running = True
-
-    while running:
+    while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
             controller.handle_pygame_event(event)
 
-        model.update()
         view.draw()
         time.sleep(.001)
 

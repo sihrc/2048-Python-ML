@@ -23,8 +23,12 @@ class View:
             pygame.draw.rect(self.screen, c.LINE_COLOR, pygame.Rect(0, c.getDistance(y) - c.LINE_WIDTH, self.screen_size[0], c.LINE_WIDTH))
 
     def draw_blocks(self):
-        for block in self.model.blocks:
-            pygame.draw.rect(self.screen, block.color, pygame.Rect(block.x,block.y,block.width,block.height))
+        for list_blocks in self.model.blocks:
+            print list_blocks
+            for block in list_blocks:
+                if block == 0:
+                    continue
+                pygame.draw.rect(self.screen, block.color, pygame.Rect(block.x,block.y,block.width,block.height))
 
     def draw(self):
         """ Draws the game state to the PyGame window """

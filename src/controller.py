@@ -1,6 +1,8 @@
 from pygame.locals import *
 import pygame
 
+import config as c
+
 class Controller:
     """ Controls Brick Breaker using the keyboard """
     
@@ -16,10 +18,16 @@ class Controller:
             # nothing to do
             return
         if event.key == pygame.K_LEFT:
-            print "LEFT"
+            c.printer("LEFT", "controller")
+            self.model.left()
         elif event.key == pygame.K_RIGHT:
-            print "RIGHT"
+            c.printer("RIGHT", "controller")
+            self.model.right()
         elif event.key == pygame.K_UP:
-            print "UP"
+            c.printer("UP", "controller")
+            self.model.up()
         elif event.key == pygame.K_DOWN:
-            print "DOWN"
+            c.printer("DOWN", "controller")
+            self.model.down()
+
+        self.model.update()
