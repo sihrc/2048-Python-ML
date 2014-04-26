@@ -14,26 +14,26 @@ class Model:
 
     def update(self):
         self.newBlock() 
-        self.getBlocks()    
+        self.getBlocks()
 
     def left(self):
         self.getGrid()
-        self.shift(-1,0)
+        self.shift(-1,1)
         self.getBlocks()
 
     def right(self):
         self.getGrid()
-        self.shift(1,0)
+        self.shift(1,1)
         self.getBlocks()
 
     def down(self):
         self.getGrid()
-        self.shift(1,1)
+        self.shift(1,0)
         self.getBlocks()
 
     def up(self):
         self.getGrid()
-        self.shift(-1,1)
+        self.shift(-1,0)
         self.getBlocks()
 
     def shift(self, way, axis):
@@ -43,6 +43,7 @@ class Model:
             range_ = range(len(curr))
             x = 0 if way == -1 else len(curr) - 1
             while True:
+                c.printer(curr,"model")
                 next_ = x - way
                 if next_ in range_:
                     if curr[x] == 0 and curr[next_] == 0:
@@ -58,6 +59,7 @@ class Model:
                         x -= way
                 else:
                     break
+                c.printer(curr,"model")
             if axis == 0:
                 self.grid[y,:] = curr
             else:
@@ -67,7 +69,7 @@ class Model:
     def newBlock(self):
         rows, cols = np.where(self.grid == 0)
         row,col = random.choice(zip(rows,cols))
-        self.grid[row,col] = 1
+        self.grid[row,col] = 2
 
     def getGrid(self):
         for x in xrange(self.size[0]):
@@ -96,7 +98,7 @@ class Block:
         self.posy = posy
         self.width = c.BOX_SIZE
         self.height = c.BOX_SIZE
-        self.color = c.BOX_COLOR
+        self.color = c.BOX_COLOR[self.value]
         self.update()
 
     def update(self):

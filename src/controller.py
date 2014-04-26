@@ -20,14 +20,18 @@ class Controller:
         if event.key == pygame.K_LEFT:
             c.printer("LEFT", "controller")
             self.model.left()
+            self.model.update()
         elif event.key == pygame.K_RIGHT:
             c.printer("RIGHT", "controller")
             self.model.right()
+            self.model.update()
         elif event.key == pygame.K_UP:
             c.printer("UP", "controller")
             self.model.up()
+            self.model.update()
         elif event.key == pygame.K_DOWN:
             c.printer("DOWN", "controller")
             self.model.down()
+            self.model.update()
 
-        self.model.update()
+        

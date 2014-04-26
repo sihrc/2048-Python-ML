@@ -23,12 +23,15 @@ class View:
             pygame.draw.rect(self.screen, c.LINE_COLOR, pygame.Rect(0, c.getDistance(y) - c.LINE_WIDTH, self.screen_size[0], c.LINE_WIDTH))
 
     def draw_blocks(self):
+        myfont = pygame.font.SysFont("monospace", 50)
         for list_blocks in self.model.blocks:
-            print list_blocks
             for block in list_blocks:
                 if block == 0:
                     continue
+                # pygame.draw.
                 pygame.draw.rect(self.screen, block.color, pygame.Rect(block.x,block.y,block.width,block.height))
+                number = myfont.render("%d" % block.value, 1, (255,255,255))
+                self.screen.blit(number, (block.x + block.width/2 - 20, block.y + block.height/2 - 20))
 
     def draw(self):
         """ Draws the game state to the PyGame window """
