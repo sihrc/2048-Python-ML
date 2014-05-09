@@ -7,6 +7,7 @@ def printer(message, tag):
     allow = [
     # "controller",
     # "model",
+    "ai",
     ]
     if tag in allow:
         print "%s:\t\t%s" % (tag,message)
@@ -40,7 +41,6 @@ def getColor(h):
     
     R,G,B = hsvToRGB(h, 0.5, 0.55)
 
-    print R,G,B
     return h,Color(int(256*R),int(256*G),int(256*B))
     
 BOX_SIZE = 190

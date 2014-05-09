@@ -8,33 +8,48 @@ class Model:
    
     def __init__(self, size = (4,4)):
         """ Constructs a new Model object """
+        self.gameover = False
         self.size = size
-        self.blocks = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-        self.grid = np.zeros(shape = size)
+        self.grid = np.zeros(shape = size).astype('int')
+        self.blocks = self.grid.tolist()
+        self.hasMoved = False
+
+
+
+    def reset(self):
+        self.gameover = True
+        self.__init__(size = self.size) 
 
     def update(self):
-        self.newBlock() 
-        self.getBlocks()
+        if self.hasMoved:
+            self.newBlock() 
+            self.hasMoved = False
 
     def left(self):
-        self.getGrid()
-        self.shift(-1,1)
-        self.getBlocks()
+        self.arrow_press(-1,1)
 
     def right(self):
-        self.getGrid()
-        self.shift(1,1)
-        self.getBlocks()
+        self.arrow_press(1,1)
 
     def down(self):
-        self.getGrid()
-        self.shift(1,0)
-        self.getBlocks()
+        self.arrow_press(1,0)
 
     def up(self):
-        self.getGrid()
-        self.shift(-1,0)
-        self.getBlocks()
+        self.arrow_press(-1,0)
+
+    def arrow_press(self, a, b):
+        prev = self.grid.copy()
+        grid = self.shift(a,b)
+        if not self.has_moves() and len(np.where(self.grid == 0)[0]) == 0:
+            self.gameover = True
+        self.hasMoved = not (prev == self.grid).all()
+
+    def has_moves(self):
+        if (self.grid[1:,:] == self.grid[:-1,:]).any():
+            return True
+        if (self.grid[:,1:] == self.grid[:,:-1]).any():
+            return True
+        return
 
     def shift(self, way, axis):
         for y in xrange(self.size[axis]):
@@ -68,17 +83,10 @@ class Model:
 
     def newBlock(self):
         rows, cols = np.where(self.grid == 0)
+        if len(rows) == 0:
+            return
         row,col = random.choice(zip(rows,cols))
-        self.grid[row,col] = 2
-
-    def getGrid(self):
-        for x in xrange(self.size[0]):
-            for y in xrange(self.size[1]):
-                if self.blocks[x][y] == 0:
-                    self.grid[x,y] = 0
-                else:
-                    self.grid[x,y] = self.blocks[x][y].value
-        
+        self.grid[row,col] = 2       
 
     def getBlocks(self):
         for x in xrange(self.size[0]):

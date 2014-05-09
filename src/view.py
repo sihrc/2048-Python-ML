@@ -23,6 +23,7 @@ class View:
             pygame.draw.rect(self.screen, c.LINE_COLOR, pygame.Rect(0, c.getDistance(y) - c.LINE_WIDTH, self.screen_size[0], c.LINE_WIDTH))
 
     def draw_blocks(self):
+        self.model.getBlocks()
         myfont = pygame.font.SysFont("monospace", 50)
         for list_blocks in self.model.blocks:
             for block in list_blocks:
