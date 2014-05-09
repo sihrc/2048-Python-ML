@@ -11,7 +11,7 @@ import copy
 
 def evaluateGrid(grid, oldgrid):
     if (oldgrid == grid).all():
-        return -10
+        return -100000
     empty = len(np.where(grid == 0)[0])
     points = np.sum(grid)
     return empty * 15 + points
@@ -36,23 +36,12 @@ if __name__ == "__main__":
 
     while True:
         moves = []
-        xmodel = Model()
+        original = model.grid.copy()
+        for move in [model.up, model.right, model.down, model.left]:
+            model.grid = original.copy()
+            move()
+            moves.append((evaluateGrid(model.grid, original), move))
 
-        xmodel.grid = model.grid.copy()
-        xmodel.up()
-        moves.append((evaluateGrid(xmodel.grid, grid), model.up))
-
-        xmodel.grid = model.grid.copy()
-        xmodel.right()
-        moves.append((evaluateGrid(xmodel.grid, grid), model.right))
-
-        xmodel.grid = model.grid.copy()
-        xmodel.down()
-        moves.append((evaluateGrid(xmodel.grid, grid), model.down))
-
-        xmodel.grid = model.grid.copy()
-        xmodel.left()
-        moves.append((evaluateGrid(xmodel.grid, grid), model.left))
         moves.sort()
         moves[-1][1]()
 
