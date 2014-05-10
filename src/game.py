@@ -12,7 +12,6 @@ if __name__ == "__main__":
     num_blocks = (4,4)
     
     model = Model(size = num_blocks)
-    model.newBlock()
     view = View(model)
     controller = Controller(model)
 

@@ -1,8 +1,6 @@
 from model import *
-
-import time
-import copy
-
+import time, os
+import pickle as p
 
 def evaluateGrid(grid, oldgrid):
     if (oldgrid == grid).all():
@@ -25,7 +23,7 @@ def transform(mapper):
 if __name__ == "__main__":
     num_blocks = (4,4)
     mapper = np.ones((4,4))
-    results = (0, mapper)
+    results = (0, mapper) if not os.path.exists("results.pkl") else p.load(open("results.pkl",'r'))
 
     while True:
         model = Model(size = num_blocks)
@@ -33,17 +31,17 @@ if __name__ == "__main__":
         mapper = transform(results[1])
         count = 0
         while True:
-            moves = model.up
+            moves = model.grid.copy()
             best = -100000
             original = model.grid.copy()
-            for move in [model.up, model.right, model.down, model.left]:
+            for move in xrange(4):
                 model.grid = original.copy()
-                move()
+                model.move(move)
                 curr = evaluateGrid(model.grid.copy(), original)
                 if best < curr:
                     best = curr
-                    moves = move
-            moves()
+                    moves = model.grid.copy()
+            model.grid = moves.copy()
             if (original == model.grid).all():
                 count +=1
                 if count > 10:
@@ -51,10 +49,9 @@ if __name__ == "__main__":
             else:
                 count = 0
             model.update()
-
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
-            print 
             results = (score, mapper)
+            p.dump(results, open("results.pkl", 'wb'))
 

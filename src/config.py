@@ -1,9 +1,15 @@
 from pygame import Color
 
 def getDistance(num):
+    """
+    Get pixel distance for pygame objects by the grid
+    """
     return (num * BOX_SIZE + (num + 1) * LINE_WIDTH)
 
 def printer(message, tag):
+    """
+    Filterable printer
+    """
     allow = [
     # "controller",
     # "model",
@@ -13,6 +19,9 @@ def printer(message, tag):
         print "%s:\t\t%s" % (tag,message)
 
 def getColor(h):
+    """
+    Gets a random RGB color for the blocks
+    """
     def hsvToRGB(h, s, v):
         """Convert HSV color space to RGB color space
         
@@ -42,7 +51,11 @@ def getColor(h):
     R,G,B = hsvToRGB(h, 0.5, 0.55)
 
     return h,Color(int(256*R),int(256*G),int(256*B))
-    
+
+
+"""
+Constants used for pygame views
+"""
 BOX_SIZE = 190
 BACKGROUND_COLOR = Color(80,80,80)
 LINE_COLOR = Color(200,200,200)
@@ -54,10 +67,3 @@ for num in xrange(15):
     h,color = getColor(h)
     BOX_COLOR[2**num] = color
 
-
-
-def test():
-    pass
-
-if __name__ == "__main__":
-    test
