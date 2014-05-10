@@ -35,8 +35,10 @@ class Model():
             a, b = (1, 1)
         elif direction == 2: # DOWN
             a, b = (1, 0)
-        else:                # LEFT
+        elif direction == 3:                # LEFT
             a, b = (-1, 1)
+        else:
+            return
 
         prev = self.grid.copy()
         grid = self.shift(a,b)
