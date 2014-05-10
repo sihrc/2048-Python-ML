@@ -1,4 +1,4 @@
-import pygame
+# import pygame
 import numpy as np
 import random
 import config as c

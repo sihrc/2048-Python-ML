@@ -4,7 +4,6 @@
 # from controller import *
 # from view import *
 from model import *
-from config import printer
 
 import time
 import copy
@@ -37,7 +36,7 @@ def transform(mapper):
 
 
 if __name__ == "__main__":
-    pygame.init()
+    # pygame.init()
     num_blocks = (4,4)
     mapper = np.ones((4,4))
 
@@ -76,7 +75,7 @@ if __name__ == "__main__":
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
-            print mapper
+            print 
             results = (score, mapper)
 
     # pygame.quit()
