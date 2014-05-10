@@ -1,8 +1,3 @@
-# import pygame
-# from pygame.locals import *
-
-# from controller import *
-# from view import *
 from model import *
 
 import time
@@ -17,26 +12,15 @@ def evaluateGrid(grid, oldgrid):
     return empty * -20 + points
 
 def wait():
-    # while True:
-    #     for event in pygame.event.get():
-    #         if event.type == KEYDOWN and event.key == K_f:
-    #             return
     time.sleep(.01)
 
 def transform(mapper):
     gaus = np.random.normal(0, 1, size = (4,4))
     mapper += gaus
     return mapper
-# mapper = np.array([\
-# [10,5,5,10],
-# [5,1,1,5],
-# [5,1,1,5],
-# [10,5,5,10]
-# ])
 
 
 if __name__ == "__main__":
-    # pygame.init()
     num_blocks = (4,4)
     mapper = np.ones((4,4))
 
@@ -45,10 +29,7 @@ if __name__ == "__main__":
     while True:
         model = Model(size = num_blocks)
         model.newBlock()
-        # results.sort()
         mapper = transform(results[1])
-        # view = View(model)
-        # view.draw()
         count = 0
         while True:
             moves = []
@@ -67,15 +48,10 @@ if __name__ == "__main__":
                     break
             else:
                 count = 0
-            # view.draw()
-            # wait()
             model.update()
-            # view.draw()
-            # wait()
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
             print 
             results = (score, mapper)
 
-    # pygame.quit()
