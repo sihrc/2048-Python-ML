@@ -1,8 +1,8 @@
-import pygame
-from pygame.locals import *
+# import pygame
+# from pygame.locals import *
 
-from controller import *
-from view import *
+# from controller import *
+# from view import *
 from model import *
 from config import printer
 
@@ -76,6 +76,7 @@ if __name__ == "__main__":
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
+            print mapper
             results = (score, mapper)
 
-    pygame.quit()
+    # pygame.quit()
