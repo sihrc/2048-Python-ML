@@ -1,7 +1,7 @@
 from model import Model
-from view import View
+# from view import View
 
-import pygame
+# import pygame
 import numpy as np
 import time
 
