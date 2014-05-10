@@ -25,7 +25,6 @@ def transform(mapper):
 if __name__ == "__main__":
     num_blocks = (4,4)
     mapper = np.ones((4,4))
-
     results = (0, mapper)
 
     while True:
@@ -44,9 +43,7 @@ if __name__ == "__main__":
                 if best < curr:
                     best = curr
                     moves = move
-
             moves()
-
             if (original == model.grid).all():
                 count +=1
                 if count > 10:
@@ -54,6 +51,7 @@ if __name__ == "__main__":
             else:
                 count = 0
             model.update()
+
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
