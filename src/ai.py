@@ -1,7 +1,6 @@
 from model import *
-
-import time
-
+import time, os
+import pickle as p
 
 def evaluateGrid(grid, oldgrid):
     if (oldgrid == grid).all():
@@ -24,7 +23,7 @@ def transform(mapper):
 if __name__ == "__main__":
     num_blocks = (4,4)
     mapper = np.ones((4,4))
-    results = (0, mapper)
+    results = (0, mapper) if not os.path.exists("results.pkl") else p.load(open("results.pkl",'r'))
 
     while True:
         model = Model(size = num_blocks)
@@ -50,10 +49,9 @@ if __name__ == "__main__":
             else:
                 count = 0
             model.update()
-
         score = np.max(model.grid) * 16 + np.sum(model.grid)
         if score > results[0]:
             print np.max(model.grid), score
-            print 
             results = (score, mapper)
+            p.dump(results, open("results.pkl", 'wb'))
 
