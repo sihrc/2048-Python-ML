@@ -1,7 +1,6 @@
 from model import *
 
 import time
-import copy
 
 
 def evaluateGrid(grid, oldgrid):
@@ -33,17 +32,17 @@ if __name__ == "__main__":
         mapper = transform(results[1])
         count = 0
         while True:
-            moves = model.up
+            moves = model.grid.copy()
             best = -100000
             original = model.grid.copy()
-            for move in [model.up, model.right, model.down, model.left]:
+            for move in xrange(4):
                 model.grid = original.copy()
-                move()
+                model.move(move)
                 curr = evaluateGrid(model.grid.copy(), original)
                 if best < curr:
                     best = curr
-                    moves = move
-            moves()
+                    moves = model.grid.copy()
+            model.grid = moves.copy()
             if (original == model.grid).all():
                 count +=1
                 if count > 10:
