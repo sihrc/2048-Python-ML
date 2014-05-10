@@ -9,7 +9,7 @@ class View:
             model: the Brick Breaker game state """
         self.model = model
         self.screen = self.create_screen()
-            
+        self.blocks = self.model.grid.tolist()            
     def create_screen(self):
         rows, cols = self.model.size
         self.screen_size = c.getDistance(rows), c.getDistance(cols)
@@ -23,9 +23,9 @@ class View:
             pygame.draw.rect(self.screen, c.LINE_COLOR, pygame.Rect(0, c.getDistance(y) - c.LINE_WIDTH, self.screen_size[0], c.LINE_WIDTH))
 
     def draw_blocks(self):
-        self.model.getBlocks()
+        self.getBlocks()
         myfont = pygame.font.SysFont("monospace", 50)
-        for list_blocks in self.model.blocks:
+        for list_blocks in self.blocks:
             for block in list_blocks:
                 if block == 0:
                     continue
@@ -34,9 +34,35 @@ class View:
                 number = myfont.render("%d" % block.value, 1, (255,255,255))
                 self.screen.blit(number, (block.x + block.width/2 - 20, block.y + block.height/2 - 20))
 
+    def getBlocks(self):
+        for x in xrange(self.model.size[0]):
+            for y in xrange(self.model.size[1]):
+                if self.model.grid[x,y] == 0:
+                    self.blocks[x][y] = 0
+                else:
+                    self.blocks[x][y] = Block(x,y,self.model.grid[x,y])
+
     def draw(self):
         """ Draws the game state to the PyGame window """
         self.screen.fill(c.BACKGROUND_COLOR)
         self.draw_lines()
         self.draw_blocks()
         pygame.display.update()
+
+
+
+class Block:
+    """ Encodes the state of a brick """
+    def __init__(self,posx,posy, value = 2):
+        self.value = value
+        self.posx = posx
+        self.posy = posy
+        self.width = c.BOX_SIZE
+        self.height = c.BOX_SIZE
+        self.color = c.BOX_COLOR[self.value]
+        self.update()
+
+    def update(self):
+        """ Update Brick state """
+        self.x = c.getDistance(self.posx)
+        self.y = c.getDistance(self.posy)

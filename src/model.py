@@ -1,7 +1,6 @@
 # import pygame
 import numpy as np
 import random
-import config as c
 
 class Model:
     """ Encodes the game state for the Brick Breaker game """
@@ -11,9 +10,7 @@ class Model:
         self.gameover = False
         self.size = size
         self.grid = np.zeros(shape = size).astype('int')
-        self.blocks = self.grid.tolist()
         self.hasMoved = False
-
 
 
     def reset(self):
@@ -58,7 +55,6 @@ class Model:
             range_ = range(len(curr))
             x = 0 if way == -1 else len(curr) - 1
             while True:
-                c.printer(curr,"model")
                 next_ = x - way
                 if next_ in range_:
                     if curr[x] == 0 and curr[next_] == 0:
@@ -74,7 +70,6 @@ class Model:
                         x -= way
                 else:
                     break
-                c.printer(curr,"model")
             if axis == 0:
                 self.grid[y,:] = curr
             else:
@@ -88,28 +83,6 @@ class Model:
         row,col = random.choice(zip(rows,cols))
         self.grid[row,col] = 2       
 
-    def getBlocks(self):
-        for x in xrange(self.size[0]):
-            for y in xrange(self.size[1]):
-                if self.grid[x,y] == 0:
-                    self.blocks[x][y] = 0
-                else:
-                    self.blocks[x][y] = Block(x,y,self.grid[x,y])
 
 
 
-class Block:
-    """ Encodes the state of a brick """
-    def __init__(self,posx,posy, value = 2):
-        self.value = value
-        self.posx = posx
-        self.posy = posy
-        self.width = c.BOX_SIZE
-        self.height = c.BOX_SIZE
-        self.color = c.BOX_COLOR[self.value]
-        self.update()
-
-    def update(self):
-        """ Update Brick state """
-        self.x = c.getDistance(self.posx)
-        self.y = c.getDistance(self.posy)
