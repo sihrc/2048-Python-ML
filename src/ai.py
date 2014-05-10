@@ -8,6 +8,8 @@ def evaluateGrid(grid, oldgrid):
     if (oldgrid == grid).all():
         return -1000
     empty = len(np.where(grid != 0)[0])
+    if empty == 16:
+        return -100000
     points = np.sum(mapper * grid)
     return empty * -20 + points
 
@@ -32,15 +34,18 @@ if __name__ == "__main__":
         mapper = transform(results[1])
         count = 0
         while True:
-            moves = []
+            moves = model.up
+            best = -100000
             original = model.grid.copy()
             for move in [model.up, model.right, model.down, model.left]:
                 model.grid = original.copy()
                 move()
-                moves.append((evaluateGrid(model.grid.copy(), original), move))
+                curr = evaluateGrid(model.grid.copy(), original)
+                if best < curr:
+                    best = curr
+                    moves = move
 
-            moves.sort()
-            moves[-1][1]()
+            moves()
 
             if (original == model.grid).all():
                 count +=1
